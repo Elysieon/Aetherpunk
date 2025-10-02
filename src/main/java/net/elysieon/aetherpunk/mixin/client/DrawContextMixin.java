@@ -51,9 +51,9 @@ public abstract class DrawContextMixin {
                 var rgb = 0x81DAD0;
                 var charge = mace.getCharge();
 
-                if (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.RELOCITY)) rgb = 0xAADA6D; charge = mace.getCharge();
+                if (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.RELOCITY)) rgb = 0x8ED385; charge = mace.getCharge();
                 if (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.OVERLOAD)) rgb = 0xFDE37F; charge = mace.getChargeOverload();
-                if (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.VOLATILE)) rgb = 0xCF493E; charge = mace.getCharge();
+                if (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.VOLATILE)) rgb = 0xD18585; charge = mace.getCharge();
 
                 this.fill(RenderLayer.getGuiOverlay(), x + 2, y + 13, x + 15, y + 15, -16777216);
                 float clampedCharge = Math.min(charge, 1.0F);

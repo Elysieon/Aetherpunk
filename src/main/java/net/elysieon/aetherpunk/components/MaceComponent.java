@@ -25,6 +25,11 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
 public class MaceComponent implements AutoSyncedComponent, CommonTickingComponent {
+    public static final Vec3i AETHER_COLOR = new Vec3i(255, 255, 255);
+    public static final Vec3i RELOCITY_COLOR = new Vec3i(142, 211, 133);
+    public static final Vec3i OVERLOAD_COLOR = new Vec3i(245, 73, 12);
+    public static final Vec3i VOLATILE_COLOR = new Vec3i(206, 48, 48);
+
     private final PlayerEntity player;
     private final IntOpenHashSet slicedEntities = new IntOpenHashSet();
     private boolean particleActive = false;
@@ -36,6 +41,21 @@ public class MaceComponent implements AutoSyncedComponent, CommonTickingComponen
     public static MaceComponent get(@NotNull PlayerEntity player) {
         return (MaceComponent) Aetherpunk.MACE.get(player);
     }
+
+    public int getChargeTint(ItemStack stack) {
+        Vec3i color = AETHER_COLOR;
+        float percent = Math.min(this.getCharge(), 1.0F);
+        if (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.RELOCITY)) color = RELOCITY_COLOR;
+        if (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.OVERLOAD)) color = OVERLOAD_COLOR;
+        if (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.VOLATILE)) color = VOLATILE_COLOR;
+
+        percent = Math.max(0.0F, percent);
+        int r = (int)(255.0F - percent * (float)(255 - color.getX()));
+        int g = (int)(255.0F - percent * (float)(255 - color.getY()));
+        int b = (int)(255.0F - percent * (float)(255 - color.getZ()));
+        return r << 16 | g << 8 | b;
+    }
+
 
     public boolean isFrozen() {
         if (this.frozen > 0) {

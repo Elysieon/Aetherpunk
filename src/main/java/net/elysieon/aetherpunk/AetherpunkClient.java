@@ -14,7 +14,14 @@ public class AetherpunkClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
 
-
+        ColorProviderRegistry.ITEM.register((ItemColorProvider)(stack, tintIndex) -> {
+            if (tintIndex == 0 && renderingPlayer != null) {
+                MaceComponent component = MaceComponent.get(renderingPlayer);
+                return component.getChargeTint(stack);
+            } else {
+                return 16777215;
+            }
+        }, new ItemConvertible[]{AetherpunkItems.MACE});
 
     }
 }
