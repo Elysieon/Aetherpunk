@@ -27,8 +27,8 @@ import org.jetbrains.annotations.NotNull;
 public class MaceComponent implements AutoSyncedComponent, CommonTickingComponent {
     public static final Vec3i AETHER_COLOR = new Vec3i(255, 255, 255);
     public static final Vec3i RELOCITY_COLOR = new Vec3i(142, 211, 133);
-    public static final Vec3i OVERLOAD_COLOR = new Vec3i(245, 73, 12);
-    public static final Vec3i VOLATILE_COLOR = new Vec3i(206, 48, 48);
+    public static final Vec3i OVERLOAD_COLOR = new Vec3i(239, 125, 15   );
+    public static final Vec3i VOLATILE_COLOR = new Vec3i(255, 43, 55);
 
     private final PlayerEntity player;
     private final IntOpenHashSet slicedEntities = new IntOpenHashSet();
@@ -98,12 +98,14 @@ public class MaceComponent implements AutoSyncedComponent, CommonTickingComponen
         this.player = playerEntity;
     }
 
-    public TypedActionResult<ItemStack> handleParticles(World world, PlayerEntity player, Hand hand) {
+    public void handleParticles() {
         if (!this.particleActive) {
             this.particleActive = true;
         }
+    }
 
-        return TypedActionResult.success(this.player.getStackInHand(hand));
+    public boolean isParticleActive() {
+        return this.particleActive;
     }
 
 

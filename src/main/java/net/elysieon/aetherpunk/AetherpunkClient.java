@@ -14,6 +14,8 @@ public class AetherpunkClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
 
+
+
         ColorProviderRegistry.ITEM.register((ItemColorProvider)(stack, tintIndex) -> {
             if (tintIndex == 0 && renderingPlayer != null) {
                 MaceComponent component = MaceComponent.get(renderingPlayer);

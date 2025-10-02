@@ -12,6 +12,7 @@
   },
   "client": [
     "client.DrawContextMixin",
+    "client.GameRendererMixin",
     "client.ItemRendererAccessor",
     "client.ItemRendererMixin",
     "client.ModelLoaderMixin"

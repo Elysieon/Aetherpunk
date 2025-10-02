@@ -2,7 +2,10 @@ package net.elysieon.aetherpunk.item;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import net.elysieon.aetherpunk.components.MaceComponent;
+import net.elysieon.aetherpunk.index.AetherpunkDamageTypes;
 import net.elysieon.aetherpunk.index.AetherpunkEnchantments;
+import net.elysieon.aetherpunk.index.AetherpunkSounds;
 import net.elysieon.aetherpunk.util.AetherpunkUtil;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.client.item.TooltipContext;
@@ -73,6 +76,142 @@ public class AetherpunkMaceItem extends Item {
 
     // Aetherpunk Mace Logic
 
+
+    public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+        ItemStack stack = player.getStackInHand(hand);
+
+        if (hand == Hand.OFF_HAND) {
+            return TypedActionResult.fail(stack);
+        } else {
+            if (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.RELOCITY)) {
+                MaceComponent mace = MaceComponent.get(player);
+                if (mace.getCharge() == 1) {
+                    mace.setCharge(0);
+                    player.playSound(AetherpunkSounds.RELOCITY, 0.3f, 1.1f);
+                    player.setVelocity(player.getRotationVector().multiply((double) 2.1F, (double) 1.3F, (double) 2.1F));
+                    mace.handleParticles();
+                    return super.use(world, player, hand);
+                }
+            }
+        }
+        return TypedActionResult.fail(stack);
+    }
+
+    public void maceHit(ItemStack stack, LivingEntity target, PlayerEntity attacker) {
+        Vec3d vel = attacker.getVelocity();
+        float damage;
+        double horizontalSpeed = Math.sqrt(vel.x * vel.x + vel.z * vel.z);
+        if (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.RELOCITY)) {
+            damage = (float) (horizontalSpeed * 9);
+        } else {
+            damage = (float) (horizontalSpeed * 11);
+        }
+        float truedamage = 0;
+
+        if (damage > 0.8) {
+            MaceComponent mace = MaceComponent.get(attacker);
+            if (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.OVERLOAD)) {
+                mace.setChargeOverload(350);
+            } else {
+                mace.setCharge(400);
+            }
+            for (int i = 0; i < damage; i++) {
+                if (!target.isDead()) {
+                    truedamage = damage * 3.2f;
+                    if (truedamage > 16) {
+                        truedamage = 16;
+                    }
+                    target.damage(target.getDamageSources().create(AetherpunkDamageTypes.OVERLOAD), truedamage);
+                }
+            }
+            attacker.setVelocity
+                    (
+                            attacker.getVelocity().x * 1.3,
+                            0.4 + damage / 25,
+                            attacker.getVelocity().z * 1.3
+                    );
+            attacker.velocityModified = true;
+            if (!target.getWorld().isClient) {
+                attacker.getWorld().playSound(
+                        null,
+                        attacker.getBlockPos(),
+                        AetherpunkSounds.MACE_IMPACT_1,
+                        SoundCategory.PLAYERS,
+                        1.5f,
+                        AetherpunkUtil.random(1.1f, 1.15f)
+                );
+            }
+            if (!target.getWorld().isClient) {
+                attacker.getWorld().playSound(
+                        null,
+                        attacker.getBlockPos(),
+                        AetherpunkSounds.MACE_IMPACT_2,
+                        SoundCategory.PLAYERS,
+                        2.5f, AetherpunkUtil.random(1.1f, 1.15f)
+                );
+            }
+        }
+    }
+
+
+    @Override
+    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        if (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.OVERLOAD)) {
+            Vec3d vel = attacker.getVelocity();
+            float damage;
+            double horizontalSpeed = Math.sqrt(vel.x * vel.x + vel.z * vel.z);
+            damage = (float) (horizontalSpeed * 11);
+            float truedamage = 0;
+            if (damage > 10) {
+                if (attacker instanceof PlayerEntity player) {
+                    MaceComponent mace = MaceComponent.get(player);
+                    if (mace.getChargeOverload() == 1) {
+                        mace.setChargeOverload(0);
+                        for (int i = 0; i < damage; i++) {
+                            if (!target.isDead()) {
+                                truedamage = damage * 3.6f;
+                                if (truedamage > 23) {
+                                    truedamage = 23;
+                                }
+                                target.damage(target.getDamageSources().create(AetherpunkDamageTypes.OVERLOAD), truedamage);
+                            }
+                        }
+                        attacker.setVelocity
+                                (
+                                        attacker.getVelocity().x * 2.5,
+                                        1,
+                                        attacker.getVelocity().z * 2.5
+                                );
+                        attacker.velocityModified = true;
+                        if (!target.getWorld().isClient) {
+                            attacker.getWorld().playSound(
+                                    null,
+                                    attacker.getBlockPos(),
+                                    AetherpunkSounds.MACE_IMPACT_3,
+                                    SoundCategory.PLAYERS,
+                                    1.5f,
+                                    0.9f
+                            );
+                        }
+                    } else {
+                        maceHit(stack, target, player);
+                    }
+                }
+            } else {
+                if (attacker instanceof PlayerEntity player) {
+                    maceHit(stack, target, player);
+                }
+
+            }
+        } else {
+            if (attacker instanceof PlayerEntity player) {
+                maceHit(stack, target, player);
+            }
+        }
+
+
+        return super.postHit(stack, target, attacker);
+    }
 
 
 }

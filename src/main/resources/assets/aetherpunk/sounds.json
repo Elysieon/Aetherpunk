@@ -1,0 +1,26 @@
+{
+  "mace_impact_1": {
+    "subtitle": "Mace Impact",
+    "sounds": [
+      "aetherpunk:mace_impact_1"
+    ]
+  },
+  "mace_impact_2": {
+    "subtitle": "Mace Heavy Impact",
+    "sounds": [
+      "aetherpunk:mace_impact_2"
+    ]
+  },
+  "mace_impact_3": {
+    "subtitle": "Mace Heavy Impact",
+    "sounds": [
+      "aetherpunk:mace_impact_3"
+    ]
+  },
+  "relocity": {
+    "subtitle": "Mace Dash",
+    "sounds": [
+      "aetherpunk:relocity"
+    ]
+  }
+}

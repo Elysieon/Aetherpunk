@@ -6,9 +6,7 @@ import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
 import dev.onyxstudios.cca.api.v3.entity.RespawnCopyStrategy;
 import net.elysieon.aetherpunk.components.MaceComponent;
-import net.elysieon.aetherpunk.index.AetherpunkBlocks;
-import net.elysieon.aetherpunk.index.AetherpunkEnchantments;
-import net.elysieon.aetherpunk.index.AetherpunkItems;
+import net.elysieon.aetherpunk.index.*;
 import net.elysieon.aetherpunk.util.LootTableModifier;
 import net.fabricmc.api.ModInitializer;
 
@@ -33,6 +31,7 @@ public class Aetherpunk implements ModInitializer, EntityComponentInitializer {
         AetherpunkEnchantments.init();
         AetherpunkItems.init();
         AetherpunkBlocks.init();
+        AetherpunkSounds.init();
 
         LootTableModifier.LootTableModifier();
 	}
