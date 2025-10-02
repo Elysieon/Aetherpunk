@@ -2,6 +2,8 @@ package net.elysieon.aetherpunk.item;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import net.elysieon.aetherpunk.index.AetherpunkEnchantments;
+import net.elysieon.aetherpunk.util.AetherpunkUtil;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -49,6 +51,24 @@ public class AetherpunkMaceItem extends Item {
                         ATTACK_SPEED - 4F, EntityAttributeModifier.Operation.ADDITION
                 ))
                 .build();
+    }
+
+    public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(EquipmentSlot slot) {
+        return slot == EquipmentSlot.MAINHAND ? this.attributeModifiers : super.getAttributeModifiers(slot);
+    }
+
+    @Override
+    public Text getName(ItemStack stack) {
+        var rgbColor = 0x81DAD0;
+        if (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.RELOCITY)) rgbColor = 0xAADA6D;
+        if (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.OVERLOAD)) rgbColor = 0xFDE37F;
+        if (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.VOLATILE)) rgbColor = 0xCF493E;
+        return Text.translatable(this.getTranslationKey(stack)).setStyle(Style.EMPTY.withColor(rgbColor));
+    }
+
+    @Override
+    public boolean isEnchantable(ItemStack stack) {
+        return true;
     }
 
     // Aetherpunk Mace Logic

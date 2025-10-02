@@ -30,8 +30,8 @@ public class Aetherpunk implements ModInitializer, EntityComponentInitializer {
 
 	@Override
 	public void onInitialize() {
-        AetherpunkItems.init();
         AetherpunkEnchantments.init();
+        AetherpunkItems.init();
         AetherpunkBlocks.init();
 
         LootTableModifier.LootTableModifier();

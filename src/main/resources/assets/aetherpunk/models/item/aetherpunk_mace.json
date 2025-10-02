@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "aetherpunk:item/aetherpunk_mace",
+    "layer1": "aetherpunk:item/aetherpunk_mace_overlay"
+  }
+}

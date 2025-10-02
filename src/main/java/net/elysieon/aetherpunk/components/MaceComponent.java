@@ -4,7 +4,10 @@ import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import dev.onyxstudios.cca.api.v3.component.tick.CommonTickingComponent;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.elysieon.aetherpunk.Aetherpunk;
+import net.elysieon.aetherpunk.AetherpunkClient;
+import net.elysieon.aetherpunk.index.AetherpunkEnchantments;
 import net.elysieon.aetherpunk.index.AetherpunkItems;
+import net.elysieon.aetherpunk.util.AetherpunkUtil;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -17,6 +20,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
