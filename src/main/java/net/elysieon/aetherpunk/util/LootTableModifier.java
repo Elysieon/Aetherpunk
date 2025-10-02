@@ -17,7 +17,7 @@ public class LootTableModifier {
             if(LootTables.TRAIL_RUINS_RARE_ARCHAEOLOGY.equals(id)) {
                 LootPool.Builder poolBuilder = LootPool.builder()
                         .rolls(ConstantLootNumberProvider.create(1))
-                        .conditionally(RandomChanceLootCondition.builder(0.50f))
+                        .conditionally(RandomChanceLootCondition.builder(0.10f))
                         .with(ItemEntry.builder(AetherpunkItems.ANCIENT_CORE))
                         .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 2.0f)).build());
                 tableBuilder.pool(poolBuilder.build());
