@@ -7,10 +7,10 @@ import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.item.*;
+import net.minecraft.potion.Potion;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.text.Text;
@@ -27,6 +27,7 @@ public interface AetherpunkItems {
     Map<Item, Identifier> ITEMS = new LinkedHashMap();
     Item MACE = createItem("aetherpunk_mace", new AetherpunkMaceItem((new FabricItemSettings()).rarity(Rarity.EPIC).maxCount(1).fireproof()), AetherpunkEnchantments.RELOCITY, AetherpunkEnchantments.OVERLOAD, AetherpunkEnchantments.VOLATILE);
     Item ANCIENT_CORE = createItem("ancient_core", new BlockItem((AetherpunkBlocks.ANCIENT_CORE), new Item.Settings().maxCount(1).fireproof()));
+
     static void init() {
         Registry.register(Registries.ITEM_GROUP, Aetherpunk.id("aetherpunk"), AETHERPUNK_GROUP);
         ITEMS.keySet().forEach((item) -> Registry.register(Registries.ITEM, (Identifier)ITEMS.get(item), item));

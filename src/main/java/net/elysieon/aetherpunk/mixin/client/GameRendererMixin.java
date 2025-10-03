@@ -17,9 +17,6 @@ public class GameRendererMixin {
     @ModifyReturnValue(at = @At("RETURN"), method = "getFov")
     private double aetherpunk$Velocity(double original, Camera camera, float tickProgress, boolean changingFov) {
         final var localPlayer = MinecraftClient.getInstance().player;
-        if (localPlayer == null) return original;
-        MaceComponent mace = MaceComponent.get(localPlayer);
-        if (!(mace.isParticleActive())) return original;
         if (localPlayer != null) original += GameRendererMixinImpl.getFovIncrease(localPlayer, tickProgress);
         return original;
     }

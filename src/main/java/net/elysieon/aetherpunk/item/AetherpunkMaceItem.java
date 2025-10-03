@@ -52,7 +52,7 @@ public class AetherpunkMaceItem extends Item {
     @Override
     public Text getName(ItemStack stack) {
         var rgbColor = 0x81DAD0;
-        if (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.RELOCITY)) rgbColor = 0xAADA6D;
+        if (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.RELOCITY)) rgbColor = 0x6FF28D;
         if (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.OVERLOAD)) rgbColor = 0xFDE37F;
         if (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.VOLATILE)) rgbColor = 0xCF493E;
         return Text.translatable(this.getTranslationKey(stack)).setStyle(Style.EMPTY.withColor(rgbColor));
@@ -69,9 +69,10 @@ public class AetherpunkMaceItem extends Item {
         ItemStack stack = player.getStackInHand(hand);
         MaceComponent mace = MaceComponent.get(player);
         if ((hand == Hand.OFF_HAND) || (!(AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.RELOCITY))) || (!(mace.getCharge() >= 1))) return TypedActionResult.fail(stack);
+
         mace.setCharge(0);
         player.playSound(AetherpunkSounds.RELOCITY, 0.3f, 1.1f);
-        player.setVelocity(player.getRotationVector().multiply((double) 2.1F, (double) 1.3F, (double) 2.1F));
+        player.setVelocity(player.getRotationVector().multiply((double) 2.4F, (double) 1.3F, (double) 2.4F));
         mace.handleParticles();
         return super.use(world, player, hand);
     }
@@ -83,6 +84,13 @@ public class AetherpunkMaceItem extends Item {
         target.damage(target.getDamageSources().create(AetherpunkDamageTypes.OVERLOAD), damage);
         player.setVelocity(player.getVelocity().x * 2.5, 1, player.getVelocity().z * 2.5);
         player.velocityModified = true;
+
+        mace.sparkFrozen();
+        if (target instanceof PlayerEntity targetPlayer) {
+            final var targetMaceComponent = MaceComponent.get(targetPlayer);
+            targetMaceComponent.sparkFrozen();
+        }
+
         if (!target.getWorld().isClient)
             player.getWorld().playSound(null, player.getBlockPos(), AetherpunkSounds.MACE_IMPACT_3, SoundCategory.PLAYERS, 1.5f, 0.9f);
     }
@@ -106,7 +114,7 @@ public class AetherpunkMaceItem extends Item {
 
         // Refills Charge depending on style
         if (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.OVERLOAD)) mace.setChargeOverload(350);
-        if (!(AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.OVERLOAD))) mace.setCharge(400);
+        mace.setCharge(400);
 
         // Set Velocity
         attacker.setVelocity(attacker.getVelocity().x * 1.3, 0.4 + damage / 25, attacker.getVelocity().z * 1.3);
