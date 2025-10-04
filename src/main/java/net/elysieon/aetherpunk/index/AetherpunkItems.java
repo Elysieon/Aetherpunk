@@ -27,6 +27,7 @@ public interface AetherpunkItems {
     Map<Item, Identifier> ITEMS = new LinkedHashMap();
     Item MACE = createItem("aetherpunk_mace", new AetherpunkMaceItem((new FabricItemSettings()).rarity(Rarity.EPIC).maxCount(1).fireproof()), AetherpunkEnchantments.RELOCITY, AetherpunkEnchantments.OVERLOAD, AetherpunkEnchantments.VOLATILE);
     Item ANCIENT_CORE = createItem("ancient_core", new BlockItem((AetherpunkBlocks.ANCIENT_CORE), new Item.Settings().maxCount(1).fireproof()));
+    Item DIAMOND_BOTTLE = createItem("diamond_bottle", new PotionItem(new Item.Settings()));
 
     static void init() {
         Registry.register(Registries.ITEM_GROUP, Aetherpunk.id("aetherpunk"), AETHERPUNK_GROUP);

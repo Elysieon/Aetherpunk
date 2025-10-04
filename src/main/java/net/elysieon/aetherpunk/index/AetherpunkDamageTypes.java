@@ -11,6 +11,7 @@ import org.jetbrains.annotations.Nullable;
 public interface AetherpunkDamageTypes {
     RegistryKey<DamageType> SLAM = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Aetherpunk.id("smash"));
     RegistryKey<DamageType> OVERLOAD = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Aetherpunk.id("overload"));
+    RegistryKey<DamageType> VOLATILE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Aetherpunk.id("volatile"));
 
     static DamageSource create(World world, RegistryKey<DamageType> key, @Nullable Entity source, @Nullable Entity attacker) {
         return new DamageSource(world.getRegistryManager().get(RegistryKeys.DAMAGE_TYPE).entryOf(key), source, attacker);

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "aetherpunk:item/aetherpunk_mace_gold"
+  }
+}

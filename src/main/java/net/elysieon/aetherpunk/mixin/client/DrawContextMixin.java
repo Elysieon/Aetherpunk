@@ -55,6 +55,7 @@ public abstract class DrawContextMixin {
                 if (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.OVERLOAD)) rgb = 0xFDE37F;
                 if (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.VOLATILE)) rgb = 0xD18585;
 
+                if (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.VOLATILE)) charge = mace.getChargeVolatile();
                 if (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.OVERLOAD)) charge = mace.getChargeOverload();
 
                 this.fill(RenderLayer.getGuiOverlay(), x + 2, y + 13, x + 15, y + 15, -16777216);

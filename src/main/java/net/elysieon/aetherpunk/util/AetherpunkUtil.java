@@ -1,9 +1,14 @@
 package net.elysieon.aetherpunk.util;
 
-import net.elysieon.aetherpunk.index.AetherpunkEnchantments;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class AetherpunkUtil {
     // Player has enchantment
@@ -20,4 +25,5 @@ public class AetherpunkUtil {
     public static double random(double min, double max) {
         return Math.random() * (max - min) + min;
     }
+
 }

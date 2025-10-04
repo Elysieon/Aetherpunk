@@ -29,10 +29,10 @@ import org.jetbrains.annotations.NotNull;
 import java.awt.*;
 
 public class MaceComponent implements AutoSyncedComponent, CommonTickingComponent {
-    public static final Vec3i AETHER_COLOR = new Vec3i(255, 255, 255);
+    public static final Vec3i AETHER_COLOR = new Vec3i(195, 241, 231);
     public static final Vec3i RELOCITY_COLOR = new Vec3i(142, 211, 133);
-    public static final Vec3i OVERLOAD_COLOR = new Vec3i(109, 255, 30   );
-    public static final Vec3i VOLATILE_COLOR = new Vec3i(255, 43, 55);
+    public static final Vec3i OVERLOAD_COLOR = new Vec3i(247, 192, 39);
+    public static final Vec3i VOLATILE_COLOR = new Vec3i(165, 41, 53);
 
     private final PlayerEntity player;
 
@@ -41,26 +41,16 @@ public class MaceComponent implements AutoSyncedComponent, CommonTickingComponen
     private int frozen = 0;
     private int maceCharge = 400;
     private int maceOverloadCharge = 350;
+    private int maceVolatileCharge = 350;
     private int previousFrozen = 0;
 
     public static MaceComponent get(@NotNull PlayerEntity player) {
         return (MaceComponent) Aetherpunk.MACE.get(player);
     }
     public int getChargeTint(ItemStack stack) {
-        Vec3i color = AETHER_COLOR;
-        float percent = Math.min(this.getCharge(), 1.0F);
-        if (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.RELOCITY)) color = RELOCITY_COLOR;
-        if (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.OVERLOAD)) color = OVERLOAD_COLOR;
-        if (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.VOLATILE)) color = VOLATILE_COLOR;
-
-        // So gay of me
-        if (stack.getName().getString().equals("Rainbow")) return Color.getHSBColor((float)(player.getWorld().getTime() / 100d) % 360, 1, 1).getRGB();
-
-        percent = Math.max(0.0F, percent);
-        int r = (int)(255.0F - percent * (float)(255 - color.getX()));
-        int g = (int)(255.0F - percent * (float)(255 - color.getY()));
-        int b = (int)(255.0F - percent * (float)(255 - color.getZ()));
-        return r << 16 | g << 8 | b;
+        // Rainbow UwU
+        if (stack.getName().getString().equals("Gaytherpunk")) return Color.getHSBColor((float)(player.getWorld().getTime() / 100d) % 360, 1, 1).getRGB();
+        return 16777215;
     }
 
 
@@ -111,6 +101,10 @@ public class MaceComponent implements AutoSyncedComponent, CommonTickingComponen
         return (float)this.maceOverloadCharge / 350;
     }
 
+    public float getChargeVolatile() {
+        return (float)this.maceVolatileCharge / 350;
+    }
+
     public void setCharge(int Charge) {
         this.maceCharge = Charge;
         this.sync();
@@ -118,6 +112,11 @@ public class MaceComponent implements AutoSyncedComponent, CommonTickingComponen
 
     public void setChargeOverload(int Charge) {
         this.maceOverloadCharge = Charge;
+        this.sync();
+    }
+
+    public void setChargeVolatile(int Charge) {
+        this.maceVolatileCharge = Charge;
         this.sync();
     }
 
@@ -143,12 +142,19 @@ public class MaceComponent implements AutoSyncedComponent, CommonTickingComponen
     }
 
 
+    public void handleTrailParticles() {
+        if (this.player.isOnGround()) this.particleActive = false;
+
+        //
+
+    }
 
     @Override
     public void tick() {
-        if (this.player.isOnGround() && (this.particleActive)) this.particleActive = false;
+        if (this.particleActive) handleTrailParticles();
         this.tickFrozenState();
 
+        if (this.maceVolatileCharge < 350) this.maceVolatileCharge ++;
         if (this.maceOverloadCharge < 350) this.maceOverloadCharge ++;
         if (this.maceCharge < 400) this.maceCharge ++;
 
@@ -158,6 +164,7 @@ public class MaceComponent implements AutoSyncedComponent, CommonTickingComponen
     public void readFromNbt(NbtCompound tag) {
         this.particleActive = tag.getBoolean("particleActive");
         this.maceCharge = tag.getInt("maceCharge");
+        this.maceVolatileCharge = tag.getInt("maceVolatileCharge");
         this.maceOverloadCharge = tag.getInt("maceOverloadCharge");
         this.frozen = tag.getInt("frozen");
     }
@@ -165,6 +172,7 @@ public class MaceComponent implements AutoSyncedComponent, CommonTickingComponen
     public void writeToNbt(NbtCompound tag) {
         tag.putBoolean("particleActive", this.particleActive);
         tag.putInt("maceCharge", this.maceCharge);
+        tag.putInt("maceVolatileCharge", this.maceVolatileCharge);
         tag.putInt("maceOverloadCharge", this.maceOverloadCharge);
         tag.putInt("frozen", this.frozen);
     }

@@ -1,0 +1,6 @@
+accessWidener v1 named
+
+accessible method net/minecraft/particle/ParticleTypes register (Ljava/lang/String;Z)Lnet/minecraft/particle/DefaultParticleType;
+accessible method net/minecraft/particle/ParticleTypes register (Ljava/lang/String;ZLnet/minecraft/particle/ParticleEffect$Factory;Ljava/util/function/Function;)Lnet/minecraft/particle/ParticleType;
+
+accessible class net/minecraft/screen/BrewingStandScreenHandler$PotionSlot

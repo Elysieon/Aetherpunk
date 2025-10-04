@@ -3,6 +3,7 @@ package net.elysieon.aetherpunk.item;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.elysieon.aetherpunk.components.MaceComponent;
+import net.elysieon.aetherpunk.entity.VolatileEntity;
 import net.elysieon.aetherpunk.index.AetherpunkDamageTypes;
 import net.elysieon.aetherpunk.index.AetherpunkEnchantments;
 import net.elysieon.aetherpunk.index.AetherpunkSounds;
@@ -21,6 +22,7 @@ import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
@@ -95,6 +97,38 @@ public class AetherpunkMaceItem extends Item {
             player.getWorld().playSound(null, player.getBlockPos(), AetherpunkSounds.MACE_IMPACT_3, SoundCategory.PLAYERS, 1.5f, 0.9f);
     }
 
+    public void volatileHit(LivingEntity target, PlayerEntity player, float damage) {
+        MaceComponent mace = MaceComponent.get(player);
+        mace.setChargeVolatile(0);
+        damage = Math.min(20, damage * 3.2f); // Slightly higher cap
+        target.damage(target.getDamageSources().create(AetherpunkDamageTypes.SLAM), damage);
+        player.damage(player.getDamageSources().create(AetherpunkDamageTypes.SLAM), damage / 2);
+
+        // Handle Entity
+        VolatileEntity volatileEntity = new VolatileEntity(player.getWorld(), player);
+        volatileEntity.setVelocity(player.getVelocity().withAxis(Direction.Axis.Y, 0).normalize().multiply(Math.max(0.75, player.getVelocity().length())));
+        volatileEntity.velocityModified = true;
+        volatileEntity.noClip = true;
+        volatileEntity.damage = damage / 2;
+        player.getWorld().spawnEntity(volatileEntity);
+
+        //
+        player.sendMessage(Text.literal("Damage:" + damage));
+
+        // Push Player
+        target.setVelocity(player.getVelocity().x * 1.75f, 1, player.getVelocity().z * 1.75f);
+        player.setVelocity(player.getVelocity().x * -1, 1, player.getVelocity().z * -1f);
+        player.velocityModified = true;
+        target.velocityModified = true;
+
+        // Sound Event
+        if (!player.getWorld().isClient) {
+            player.getWorld().playSound(null, player.getBlockPos(), AetherpunkSounds.MACE_IMPACT_1, SoundCategory.PLAYERS, 1f, AetherpunkUtil.random(1.1f, 1.15f));
+            player.getWorld().playSound(null, player.getBlockPos(), AetherpunkSounds.MACE_IMPACT_2, SoundCategory.PLAYERS, 2f, AetherpunkUtil.random(1.1f, 1.15f));
+        }
+
+    }
+
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         MaceComponent mace = MaceComponent.get((PlayerEntity) attacker);
@@ -112,8 +146,16 @@ public class AetherpunkMaceItem extends Item {
             return super.postHit(stack, target, attacker);
         }
 
+        // Checks requirements for volatile
+        if ((AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.VOLATILE)) && mace.getChargeVolatile() >= 1) {
+            volatileHit(target, (PlayerEntity) attacker, damage);
+            return super.postHit(stack, target, attacker);
+        }
+
+
         // Refills Charge depending on style
         if (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.OVERLOAD)) mace.setChargeOverload(350);
+        if (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.VOLATILE)) mace.setChargeVolatile(350);
         mace.setCharge(400);
 
         // Set Velocity

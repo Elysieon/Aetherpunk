@@ -11,5 +11,17 @@
   "enchantment.aetherpunk.overload.desc": "Channel your stored velocity into a overloading impact.",
 
   "enchantment.aetherpunk.volatile": "Volatile",
-  "enchantment.aetherpunk.volatile.desc": "I honestly got no clue what this even does, but here's the enchantment."
+  "enchantment.aetherpunk.volatile.desc": "I honestly got no clue what this even does, but here's the enchantment.",
+
+  "death.attack.aetherpunk.smash": "%1$s was smashed by %2$s",
+  "death.attack.aetherpunk.smash.item": "%1$s was smashed by %2$s wielding %3$s",
+  "death.attack.aetherpunk.smash.player": "%1$s was smashed by %2$s",
+
+  "death.attack.aetherpunk.overload": "%1$s was overloaded by %2$s",
+  "death.attack.aetherpunk.overload.item": "%1$s was overloaded by %2$s wielding %3$s",
+  "death.attack.aetherpunk.overload.player": "%1$s was overloaded by %2$s",
+
+  "death.attack.aetherpunk.volatile": "%1$s was imploded by %2$s",
+  "death.attack.aetherpunk.volatile.item": "%1$s was imploded by %2$s wielding %3$s",
+  "death.attack.aetherpunk.volatile.player": "%1$s was imploded by %2$s"
 }
