@@ -55,7 +55,6 @@ public class VolatileEntity extends PersistentProjectileEntity {
             e.damage(e.getDamageSources().create(AetherpunkDamageTypes.SLAM), damage);
         }
 
-
         // Removes itself after abit
         --this.ticksUntilRemove;
         if (this.ticksUntilRemove <= 0) this.discard();

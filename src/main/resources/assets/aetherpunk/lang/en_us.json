@@ -3,6 +3,8 @@
 
   "item.aetherpunk.aetherpunk_mace": "Aetherpunk Mace",
   "block.aetherpunk.ancient_core": "Ancient Core",
+  "block.aetherpunk.diamond_bottle": "Diamond Bottle",
+
 
   "enchantment.aetherpunk.relocity": "Relocity",
   "enchantment.aetherpunk.relocity.desc": "Reuse some of the velocity from your last strike to boost yourself forward.",
