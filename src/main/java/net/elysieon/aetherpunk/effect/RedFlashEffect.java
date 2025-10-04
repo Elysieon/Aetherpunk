@@ -6,7 +6,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.util.math.ColorHelper;
 
-public class FlashEffect implements HudRenderCallback {
+public class RedFlashEffect implements HudRenderCallback {
     /**
      * Added ticks to the flash duration.
      * This means the player will be full flashed for {BUFFER} more ticks.
@@ -19,14 +19,14 @@ public class FlashEffect implements HudRenderCallback {
     public void onHudRender(DrawContext drawContext, float v) {
         assert MinecraftClient.getInstance().player != null;
         MaceComponent component = MaceComponent.get(MinecraftClient.getInstance().player);
-        if (!(component.getFrost() > 0) || !(component.getFrozenstate() == 1))  return;
+        if (!(component.getFrost() > 0) || !(component.getFrozenstate() == 2))  return;
         var client = MinecraftClient.getInstance();
         var world = client.world;
         if (world == null) return;
 
         var difference = world.getTime() - (LAST_PARRYING_TIME + BUFFER);
-        var alpha = 150 - Math.max(0, Math.min(150, (int) (((double) difference / 5d) * 150)));
-        var colour = ColorHelper.Argb.getArgb(alpha, 255, 255, 255);
+        var alpha = 85 - Math.max(0, Math.min(150, (int) (((double) difference / 5d) * 150)));
+        var colour = ColorHelper.Argb.getArgb(alpha, 150, 25, 25);
         drawContext.fill(0, 0, drawContext.getScaledWindowWidth(), drawContext.getScaledWindowHeight(), colour);
     }
 }

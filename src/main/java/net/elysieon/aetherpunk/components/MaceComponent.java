@@ -6,6 +6,7 @@ import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.elysieon.aetherpunk.Aetherpunk;
 import net.elysieon.aetherpunk.AetherpunkClient;
 import net.elysieon.aetherpunk.effect.FlashEffect;
+import net.elysieon.aetherpunk.effect.RedFlashEffect;
 import net.elysieon.aetherpunk.index.AetherpunkEnchantments;
 import net.elysieon.aetherpunk.index.AetherpunkItems;
 import net.elysieon.aetherpunk.index.AetherpunkSounds;
@@ -20,6 +21,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.Vec3i;
@@ -39,6 +41,7 @@ public class MaceComponent implements AutoSyncedComponent, CommonTickingComponen
     private boolean particleActive = false;
 
     private int frozen = 0;
+    private int frozenstate = 0;
     private int maceCharge = 400;
     private int maceOverloadCharge = 350;
     private int maceVolatileCharge = 350;
@@ -62,8 +65,17 @@ public class MaceComponent implements AutoSyncedComponent, CommonTickingComponen
         return this.frozen;
     }
 
+    public float getFrozenstate() {
+        return this.frozenstate;
+    }
+
     public void sparkFrozen() {
         this.frozen = 5;
+        this.sync();
+    }
+
+    public void setFrozenstate(int fishystateuwu) {
+        this.frozenstate = fishystateuwu;
         this.sync();
     }
     public boolean isFrozen() {
@@ -72,10 +84,17 @@ public class MaceComponent implements AutoSyncedComponent, CommonTickingComponen
 
     private void tickFrozenState() {
         // On the last tick the player is frozen for.
-        if (this.frozen == 1 && !this.player.getWorld().isClient) {
+        if (this.frozen == 1 && !this.player.getWorld().isClient && this.frozenstate == 1)  {
             this.player.getWorld().playSound(
                     null, this.player.getBlockPos(),
                         AetherpunkSounds.MACE_IMPACT_2, SoundCategory.PLAYERS, 1.25f, 0.9f
+            );
+        }
+
+        if (this.frozen == 1 && !this.player.getWorld().isClient && this.frozenstate == 2)  {
+            this.player.getWorld().playSound(
+                    null, this.player.getBlockPos(),
+                    SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.PLAYERS, 1.25f, 1.25f
             );
         }
 
@@ -84,10 +103,15 @@ public class MaceComponent implements AutoSyncedComponent, CommonTickingComponen
             this.sync();
         }
 
-        // Basically when we got frozen.
-        if (this.player.getWorld().isClient && this.frozen != 0 && this.previousFrozen == 0) {
-            FlashEffect.LAST_PARRYING_TIME = player.getWorld().getTime();
-        }
+        // REMOVE THE FUCKING STATE OF AMERICA AHAHA
+        if (this.frozen <= 0) this.frozenstate = 0;
+
+        // Activate flashy boi
+        if (this.player.getWorld().isClient && this.frozen != 0 && this.previousFrozen == 0 && this.frozenstate == 1) FlashEffect.LAST_PARRYING_TIME = player.getWorld().getTime();
+        if (this.player.getWorld().isClient && this.frozen != 0 && this.previousFrozen == 0 && this.frozenstate == 2) RedFlashEffect.LAST_PARRYING_TIME = player.getWorld().getTime();
+
+
+
 
         this.previousFrozen = this.frozen;
     }
@@ -167,6 +191,7 @@ public class MaceComponent implements AutoSyncedComponent, CommonTickingComponen
         this.maceVolatileCharge = tag.getInt("maceVolatileCharge");
         this.maceOverloadCharge = tag.getInt("maceOverloadCharge");
         this.frozen = tag.getInt("frozen");
+        this.frozenstate = tag.getInt("frozenstate");
     }
 
     public void writeToNbt(NbtCompound tag) {
@@ -175,5 +200,6 @@ public class MaceComponent implements AutoSyncedComponent, CommonTickingComponen
         tag.putInt("maceVolatileCharge", this.maceVolatileCharge);
         tag.putInt("maceOverloadCharge", this.maceOverloadCharge);
         tag.putInt("frozen", this.frozen);
+        tag.putInt("frozenstate", this.frozenstate);
     }
 }

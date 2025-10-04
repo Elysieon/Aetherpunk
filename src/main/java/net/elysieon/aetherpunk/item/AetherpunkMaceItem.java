@@ -88,9 +88,11 @@ public class AetherpunkMaceItem extends Item {
         player.velocityModified = true;
 
         mace.sparkFrozen();
+        mace.setFrozenstate(1);
         if (target instanceof PlayerEntity targetPlayer) {
             final var targetMaceComponent = MaceComponent.get(targetPlayer);
             targetMaceComponent.sparkFrozen();
+            targetMaceComponent.setFrozenstate(1);
         }
 
         if (!target.getWorld().isClient)
@@ -112,7 +114,16 @@ public class AetherpunkMaceItem extends Item {
         volatileEntity.damage = damage / 2;
         player.getWorld().spawnEntity(volatileEntity);
 
-        //
+        // Frozenstate
+        mace.sparkFrozen();
+        mace.setFrozenstate(2);
+        if (target instanceof PlayerEntity targetPlayer) {
+            final var targetMaceComponent = MaceComponent.get(targetPlayer);
+            targetMaceComponent.sparkFrozen();
+            targetMaceComponent.setFrozenstate(2);
+        }
+
+        // Send DMG
         player.sendMessage(Text.literal("Damage:" + damage));
 
         // Push Player
@@ -126,6 +137,7 @@ public class AetherpunkMaceItem extends Item {
             player.getWorld().playSound(null, player.getBlockPos(), AetherpunkSounds.MACE_IMPACT_1, SoundCategory.PLAYERS, 1f, AetherpunkUtil.random(1.1f, 1.15f));
             player.getWorld().playSound(null, player.getBlockPos(), AetherpunkSounds.MACE_IMPACT_2, SoundCategory.PLAYERS, 2f, AetherpunkUtil.random(1.1f, 1.15f));
         }
+
 
     }
 
