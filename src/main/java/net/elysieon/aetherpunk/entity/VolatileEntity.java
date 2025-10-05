@@ -47,7 +47,7 @@ public class VolatileEntity extends PersistentProjectileEntity {
         damage = damage + 0.3f;
         List<LivingEntity> detectedEntities = this.getWorld().getEntitiesByClass(
                 LivingEntity.class,
-                Box.from(this.getPos()).expand(damage * 0.3),
+                getDamageBoxSize(),
                 entity -> true
         );
 
@@ -140,5 +140,9 @@ public class VolatileEntity extends PersistentProjectileEntity {
     @Override
     protected void onEntityHit(EntityHitResult entityHitResult) {
 
+    }
+
+    public Box getDamageBoxSize() {
+        return Box.from(this.getPos()).expand(damage * 0.3);
     }
 }
