@@ -1,6 +1,10 @@
 {
+  "format_version": "1.9.0",
+  "credit": "Made with Blockbench",
   "parent": "minecraft:item/handheld",
   "textures": {
     "layer0": "aetherpunk:item/aetherpunk_mace_gold"
-  }
+  },
+  "gui_light": "front",
+  "display": {}
 }

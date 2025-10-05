@@ -22,7 +22,6 @@ public class AetherpunkClient implements ClientModInitializer {
 
         HudRenderCallback.EVENT.register(new FlashEffect());
         HudRenderCallback.EVENT.register(new RedFlashEffect());
-
         EntityRendererRegistry.register(AetherpunkEntities.VOLATILE_ENTITY, VolatileEntityRenderer::new);
 
         ColorProviderRegistry.ITEM.register((ItemColorProvider)(stack, tintIndex) -> {

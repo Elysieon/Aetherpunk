@@ -103,15 +103,15 @@ public class AetherpunkMaceItem extends Item {
         MaceComponent mace = MaceComponent.get(player);
         mace.setChargeVolatile(0);
         damage = Math.min(20, damage * 3.2f); // Slightly higher cap
-        target.damage(target.getDamageSources().create(AetherpunkDamageTypes.SLAM), damage);
-        player.damage(player.getDamageSources().create(AetherpunkDamageTypes.SLAM), damage / 2);
+        target.damage(target.getDamageSources().create(AetherpunkDamageTypes.VOLATILE), damage);
+        player.damage(player.getDamageSources().create(AetherpunkDamageTypes.VOLATILE), damage * 0.75f);
 
         // Handle Entity
         VolatileEntity volatileEntity = new VolatileEntity(player.getWorld(), player);
         volatileEntity.setVelocity(player.getVelocity().withAxis(Direction.Axis.Y, 0).normalize().multiply(Math.max(0.75, player.getVelocity().length())));
         volatileEntity.velocityModified = true;
         volatileEntity.noClip = true;
-        volatileEntity.damage = damage / 2;
+        volatileEntity.damage = damage * 0.5f;
         player.getWorld().spawnEntity(volatileEntity);
 
         // Frozenstate
@@ -122,9 +122,6 @@ public class AetherpunkMaceItem extends Item {
             targetMaceComponent.sparkFrozen();
             targetMaceComponent.setFrozenstate(2);
         }
-
-        // Send DMG
-        player.sendMessage(Text.literal("Damage:" + damage));
 
         // Push Player
         target.setVelocity(player.getVelocity().x * 1.75f, 1, player.getVelocity().z * 1.75f);

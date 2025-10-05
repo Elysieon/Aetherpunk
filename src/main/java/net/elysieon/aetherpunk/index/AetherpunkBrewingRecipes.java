@@ -7,7 +7,7 @@ public interface AetherpunkBrewingRecipes {
     public static void init() {
         BrewingRecipeRegistry.registerItemRecipe(
                 Items.POTION,
-                Items.DIAMOND,
+                Items.DIAMOND_BLOCK,
                 AetherpunkItems.DIAMOND_BOTTLE
         );
     }

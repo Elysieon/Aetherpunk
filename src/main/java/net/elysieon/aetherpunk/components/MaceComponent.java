@@ -10,7 +10,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Vec3i;
 import org.jetbrains.annotations.NotNull;
 
@@ -77,12 +76,9 @@ public class MaceComponent implements AutoSyncedComponent, CommonTickingComponen
             );
         }
 
-        if (this.frozen == 1 && !this.player.getWorld().isClient && this.frozenstate == 2)  {
-            this.player.getWorld().playSound(
-                    null, this.player.getBlockPos(),
-                    SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.PLAYERS, 1.25f, 1.25f
-            );
-        }
+//        if (this.frozen == 1 && !this.player.getWorld().isClient && this.frozenstate == 2)  {
+//            this.player.getWorld().playSound(null, player.getBlockPos(), AetherpunkSounds.VOLATILE, SoundCategory.PLAYERS, 2f, AetherpunkUtil.random(0.9f, 0.95f));
+//        }
 
         if (this.frozen > 0) {
             this.frozen -= 1;
@@ -156,7 +152,6 @@ public class MaceComponent implements AutoSyncedComponent, CommonTickingComponen
         if (this.player.isOnGround()) this.particleActive = false;
 
         //
-
     }
 
     @Override

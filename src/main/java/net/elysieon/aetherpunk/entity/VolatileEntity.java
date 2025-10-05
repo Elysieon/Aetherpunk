@@ -8,6 +8,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.hit.EntityHitResult;
@@ -51,9 +52,14 @@ public class VolatileEntity extends PersistentProjectileEntity {
             hitEntities.add(e);
             e.setVelocity(this.getVelocity().x, 1, this.getVelocity().z);
             e.getWorld().playSound(null, e.getBlockPos(), AetherpunkSounds.MACE_IMPACT_2, SoundCategory.PLAYERS, 2f, AetherpunkUtil.random(1.1f, 1.15f));
-            e.getWorld().playSound(null, e.getBlockPos(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.PLAYERS, 1f, AetherpunkUtil.random(1.1f, 1.15f));
-            e.damage(e.getDamageSources().create(AetherpunkDamageTypes.SLAM), damage);
+            e.damage(e.getDamageSources().create(AetherpunkDamageTypes.VOLATILE_RANGE), damage);
         }
+
+        // Particles
+//        for(int i = 0; i < 100; ++i) {
+//            this.getWorld().addParticle(ParticleTypes.CRIMSON_SPORE, this.getX() + this.random.nextGaussian() * (double) damage, this.getY(), this.getZ() + this.random.nextGaussian() * damage, 0, 1, 0);
+//        }
+
 
         // Removes itself after abit
         --this.ticksUntilRemove;

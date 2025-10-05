@@ -11,7 +11,7 @@ public class AetherpunkSounds {
     public static final SoundEvent MACE_IMPACT_2 = registerSoundEvent("mace_impact_2");
     public static final SoundEvent MACE_IMPACT_3 = registerSoundEvent("mace_impact_3");
     public static final SoundEvent RELOCITY = registerSoundEvent("relocity");
-
+    public static final SoundEvent VOLATILE = registerSoundEvent("volatile");
 
     private static SoundEvent registerSoundEvent(String name) {
         Identifier id = new Identifier(Aetherpunk.MOD_ID, name);

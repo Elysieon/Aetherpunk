@@ -38,14 +38,19 @@ public abstract class ItemRendererMixin {
 
 
     public BakedModel Aetherpunk$useModel(LivingEntity entity, ItemStack stack, ModelTransformationMode renderMode, boolean leftHanded, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
+        // Player Held (Enchants)
         if (stack.isOf(AetherpunkItems.MACE) && (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.RELOCITY) && renderMode != ModelTransformationMode.GUI && renderMode != ModelTransformationMode.GROUND)) return ((ItemRendererAccessor) this).getModelsA().getModelManager().getModel(new ModelIdentifier("aetherpunk", "aetherpunk_mace_big_green", "inventory"));
-        if (stack.isOf(AetherpunkItems.MACE) && (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.RELOCITY) && renderMode == ModelTransformationMode.GUI)) return ((ItemRendererAccessor) this).getModelsA().getModelManager().getModel(new ModelIdentifier("aetherpunk", "aetherpunk_mace_green", "inventory"));
         if (stack.isOf(AetherpunkItems.MACE) && (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.OVERLOAD) && renderMode != ModelTransformationMode.GUI && renderMode != ModelTransformationMode.GROUND)) return ((ItemRendererAccessor) this).getModelsA().getModelManager().getModel(new ModelIdentifier("aetherpunk", "aetherpunk_mace_big_gold", "inventory"));
-        if (stack.isOf(AetherpunkItems.MACE) && (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.OVERLOAD) && renderMode == ModelTransformationMode.GUI)) return ((ItemRendererAccessor) this).getModelsA().getModelManager().getModel(new ModelIdentifier("aetherpunk", "aetherpunk_mace_gold", "inventory"));
         if (stack.isOf(AetherpunkItems.MACE) && (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.VOLATILE) && renderMode != ModelTransformationMode.GUI && renderMode != ModelTransformationMode.GROUND)) return ((ItemRendererAccessor) this).getModelsA().getModelManager().getModel(new ModelIdentifier("aetherpunk", "aetherpunk_mace_big_red", "inventory"));
-        if (stack.isOf(AetherpunkItems.MACE) && (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.VOLATILE) && renderMode == ModelTransformationMode.GUI)) return ((ItemRendererAccessor) this).getModelsA().getModelManager().getModel(new ModelIdentifier("aetherpunk", "aetherpunk_mace_red", "inventory"));
+
+        // GUI (Enchants)
+        if (stack.isOf(AetherpunkItems.MACE) && renderMode == ModelTransformationMode.GUI && AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.RELOCITY)) return ((ItemRendererAccessor) this).getModelsA().getModelManager().getModel(new ModelIdentifier("aetherpunk", "aetherpunk_mace_green", "inventory"));
+        if (stack.isOf(AetherpunkItems.MACE) && renderMode == ModelTransformationMode.GUI && AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.OVERLOAD)) return ((ItemRendererAccessor) this).getModelsA().getModelManager().getModel(new ModelIdentifier("aetherpunk", "aetherpunk_mace_gold", "inventory"));
+        if (stack.isOf(AetherpunkItems.MACE) && renderMode == ModelTransformationMode.GUI && AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.VOLATILE)) return ((ItemRendererAccessor) this).getModelsA().getModelManager().getModel(new ModelIdentifier("aetherpunk", "aetherpunk_mace_red", "inventory"));
+
+        // No Enchantments found
+        if (stack.isOf(AetherpunkItems.MACE) && renderMode == ModelTransformationMode.GUI) return ((ItemRendererAccessor) this).getModelsA().getModelManager().getModel(new ModelIdentifier("aetherpunk", "aetherpunk_mace", "inventory"));
         if (stack.isOf(AetherpunkItems.MACE) && renderMode != ModelTransformationMode.GUI && renderMode != ModelTransformationMode.GROUND) return ((ItemRendererAccessor) this).getModelsA().getModelManager().getModel(new ModelIdentifier("aetherpunk", "aetherpunk_mace_big_blue", "inventory"));
-        if (stack.isOf(AetherpunkItems.MACE) && renderMode == ModelTransformationMode.GUI) return ((ItemRendererAccessor) this).getModelsA().getModelManager().getModel(new ModelIdentifier("aetherpunk", "aetherpunk_mace_blue", "inventory"));
         return null;
     }
 

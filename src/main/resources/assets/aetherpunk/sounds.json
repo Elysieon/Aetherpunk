@@ -22,5 +22,11 @@
     "sounds": [
       "aetherpunk:relocity"
     ]
+  },
+  "volatile": {
+    "subtitle": "Mace Explosioon",
+    "sounds": [
+      "aetherpunk:volatile"
+    ]
   }
 }

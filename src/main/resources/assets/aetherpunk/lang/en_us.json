@@ -23,7 +23,11 @@
   "death.attack.aetherpunk.overload.item": "%1$s was overloaded by %2$s wielding %3$s",
   "death.attack.aetherpunk.overload.player": "%1$s was overloaded by %2$s",
 
-  "death.attack.aetherpunk.volatile": "%1$s was imploded by %2$s",
-  "death.attack.aetherpunk.volatile.item": "%1$s was imploded by %2$s wielding %3$s",
-  "death.attack.aetherpunk.volatile.player": "%1$s was imploded by %2$s"
+  "death.attack.aetherpunk.volatile": "%1$s was blown away by %2$s",
+  "death.attack.aetherpunk.volatile.item": "%1$s was blown away by %2$s wielding %3$s",
+  "death.attack.aetherpunk.volatile.player": "%1$s was blown away by %2$s",
+
+  "death.attack.aetherpunk.volatile_range": "%1$s was caught in the crossfire",
+  "death.attack.aetherpunk.volatile_range.item": "%1$s was caught in the crossfire",
+  "death.attack.aetherpunk.volatile_range.player": "%1$s was caught in the crossfire"
 }
