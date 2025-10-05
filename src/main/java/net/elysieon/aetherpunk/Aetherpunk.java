@@ -12,14 +12,9 @@ import net.fabricmc.api.ModInitializer;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.particle.BlockStateParticleEffect;
-import net.minecraft.particle.ParticleType;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class Aetherpunk implements ModInitializer, EntityComponentInitializer {
 	public static final String MOD_ID = "aetherpunk";
@@ -37,7 +32,6 @@ public class Aetherpunk implements ModInitializer, EntityComponentInitializer {
         AetherpunkSounds.init();
         AetherpunkEntities.init();
         AetherpunkBrewingRecipes.init();
-        AetherpunkParticles.init();
 
         LootTableModifier.LootTableModifier();
 	}
