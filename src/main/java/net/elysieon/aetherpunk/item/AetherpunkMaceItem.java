@@ -116,7 +116,7 @@ public class AetherpunkMaceItem extends Item {
 
         // Frozenstate
         mace.sparkFrozen();
-        mace.setFrozenstate(2);
+        mace.setFrozenstateFromVolatile(2);
         if (target instanceof PlayerEntity targetPlayer) {
             final var targetMaceComponent = MaceComponent.get(targetPlayer);
             targetMaceComponent.sparkFrozen();
@@ -134,8 +134,6 @@ public class AetherpunkMaceItem extends Item {
             player.getWorld().playSound(null, player.getBlockPos(), AetherpunkSounds.MACE_IMPACT_1, SoundCategory.PLAYERS, 1f, AetherpunkUtil.random(1.1f, 1.15f));
             player.getWorld().playSound(null, player.getBlockPos(), AetherpunkSounds.MACE_IMPACT_2, SoundCategory.PLAYERS, 2f, AetherpunkUtil.random(1.1f, 1.15f));
         }
-
-
     }
 
     @Override
@@ -158,6 +156,11 @@ public class AetherpunkMaceItem extends Item {
         // Checks requirements for volatile
         if ((AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.VOLATILE)) && mace.getChargeVolatile() >= 1) {
             volatileHit(target, (PlayerEntity) attacker, damage);
+
+            if (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.VOLATILE)) {
+                attacker.getWorld().playSound(null, attacker.getBlockPos(), AetherpunkSounds.VOLATILE, SoundCategory.PLAYERS, 0.5f, AetherpunkUtil.random(1.1f, 1.15f));
+            }
+
             return super.postHit(stack, target, attacker);
         }
 

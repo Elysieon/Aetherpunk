@@ -10,9 +10,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
-import net.minecraft.client.color.item.ItemColorProvider;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemConvertible;
 
 public class AetherpunkClient implements ClientModInitializer {
     public static PlayerEntity renderingPlayer = null;
@@ -24,14 +22,13 @@ public class AetherpunkClient implements ClientModInitializer {
         HudRenderCallback.EVENT.register(new RedFlashEffect());
         EntityRendererRegistry.register(AetherpunkEntities.VOLATILE_ENTITY, VolatileEntityRenderer::new);
 
-        ColorProviderRegistry.ITEM.register((ItemColorProvider)(stack, tintIndex) -> {
+        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> {
             if (tintIndex == 0 && renderingPlayer != null) {
                 MaceComponent component = MaceComponent.get(renderingPlayer);
                 return component.getChargeTint(stack);
-            } else {
-                return 16777215;
             }
-        }, new ItemConvertible[]{AetherpunkItems.MACE});
 
+            return 0xFFFFFF;
+        }, AetherpunkItems.MACE);
     }
 }

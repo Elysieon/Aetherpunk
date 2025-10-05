@@ -6,6 +6,10 @@ import net.elysieon.aetherpunk.Aetherpunk;
 import net.elysieon.aetherpunk.effect.FlashEffect;
 import net.elysieon.aetherpunk.effect.RedFlashEffect;
 import net.elysieon.aetherpunk.index.AetherpunkSounds;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -63,17 +67,46 @@ public class MaceComponent implements AutoSyncedComponent, CommonTickingComponen
         this.frozenstate = fishystateuwu;
         this.sync();
     }
+
+    public void setFrozenstateFromVolatile(int fishystateuwu) {
+        this.frozenstate = fishystateuwu;
+        this.sync();
+
+        if (this.player.getWorld() instanceof ClientWorld) {
+            this.isClientSoundsPaused = true;
+            this.pauseClientSounds();
+        }
+    }
+
+    @Environment(EnvType.CLIENT)
+    private void pauseClientSounds() {
+        MinecraftClient.getInstance().getSoundManager().pauseAll();
+    }
+
+    @Environment(EnvType.CLIENT)
+    private void resumeClientSounds() {
+        MinecraftClient.getInstance().getSoundManager().resumeAll();
+    }
+
+    private boolean isClientSoundsPaused;
+
     public boolean isFrozen() {
         return this.frozen > 0;
     }
 
     private void tickFrozenState() {
         // On the last tick the player is frozen for.
-        if (this.frozen == 1 && !this.player.getWorld().isClient && this.frozenstate == 1)  {
-            this.player.getWorld().playSound(
-                    null, this.player.getBlockPos(),
+        if (this.frozen == 1 && this.frozenstate == 1)  {
+            if (this.player.getWorld().isClient) {
+                this.isClientSoundsPaused = false;
+                this.resumeClientSounds();
+            }
+            else {
+                this.player.getWorld().playSound(
+                        null, this.player.getBlockPos(),
                         AetherpunkSounds.MACE_IMPACT_2, SoundCategory.PLAYERS, 1.25f, 0.9f
-            );
+                );
+            }
         }
 
 //        if (this.frozen == 1 && !this.player.getWorld().isClient && this.frozenstate == 2)  {

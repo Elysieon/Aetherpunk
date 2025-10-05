@@ -12,6 +12,9 @@ import net.fabricmc.api.ModInitializer;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.particle.BlockStateParticleEffect;
+import net.minecraft.particle.ParticleType;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
@@ -61,4 +64,8 @@ public class Aetherpunk implements ModInitializer, EntityComponentInitializer {
                 minZ / 16d + sizeZ / 16d
         );
     }
+
+    public static final ParticleType<BlockStateParticleEffect> DUST_PILLAR = ParticleTypes.register(
+            "dust_pillar", false, BlockStateParticleEffect.PARAMETERS_FACTORY, BlockStateParticleEffect::createCodec
+    );
 }

@@ -13,6 +13,7 @@
   "client": [
     "client.CameraMixin",
     "client.ClientPlayerEntityMixin",
+    "client.CustomParticleTypeFactoryMixin",
     "client.DrawContextMixin",
     "client.GameRendererMixin",
     "client.ItemRendererAccessor",

@@ -23,8 +23,14 @@
       "aetherpunk:relocity"
     ]
   },
+  "volatile_impact": {
+    "subtitle": "Mace Volatile Impact",
+    "sounds": [
+      "aetherpunk:volatile_impact"
+    ]
+  },
   "volatile": {
-    "subtitle": "Mace Explosioon",
+    "subtitle": "Mace Volatile",
     "sounds": [
       "aetherpunk:volatile"
     ]
