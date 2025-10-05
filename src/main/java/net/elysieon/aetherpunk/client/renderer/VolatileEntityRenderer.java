@@ -1,6 +1,7 @@
 package net.elysieon.aetherpunk.client.renderer;
 
 import net.elysieon.aetherpunk.entity.VolatileEntity;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
@@ -20,7 +21,11 @@ public class VolatileEntityRenderer<T extends VolatileEntity> extends EntityRend
     public void render(T entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
         super.render(entity, yaw, tickDelta, matrices, vertexConsumers, light);
 
-        RenderUtil.drawBox(matrices, vertexConsumers, Box.from(entity.getPos()).expand(entity.damage), entity, 1f, 0.5f, 0.25f, 1f);
+        if (MinecraftClient.getInstance().options.debugEnabled) {
+            matrices.push();
+            RenderUtil.drawBox(matrices, vertexConsumers, Box.from(entity.getPos()).expand(entity.damage), entity, 1f, 0.5f, 0.25f, 1);
+            matrices.pop();
+        }
     }
 
     @Override
