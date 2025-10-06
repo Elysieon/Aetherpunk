@@ -35,6 +35,7 @@ public class Aetherpunk implements ModInitializer, EntityComponentInitializer {
         AetherpunkSounds.init();
         AetherpunkEntities.init();
         AetherpunkBrewingRecipes.init();
+        AetherpunkParticles.init();
 
         LootTableModifier.LootTableModifier();
 	}

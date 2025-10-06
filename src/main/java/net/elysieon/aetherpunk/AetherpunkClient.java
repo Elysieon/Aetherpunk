@@ -6,6 +6,8 @@ import net.elysieon.aetherpunk.effect.FlashEffect;
 import net.elysieon.aetherpunk.effect.RedFlashEffect;
 import net.elysieon.aetherpunk.index.AetherpunkEntities;
 import net.elysieon.aetherpunk.index.AetherpunkItems;
+import net.elysieon.aetherpunk.index.AetherpunkPacket;
+import net.elysieon.aetherpunk.index.AetherpunkParticles;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
@@ -17,6 +19,9 @@ public class AetherpunkClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+
+        AetherpunkParticles.registerFactories();
+        AetherpunkPacket.init();
 
         HudRenderCallback.EVENT.register(new FlashEffect());
         HudRenderCallback.EVENT.register(new RedFlashEffect());

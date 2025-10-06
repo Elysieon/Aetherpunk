@@ -1,44 +1,45 @@
 {
-  "display": {
-    "gui": {
-      "rotation": [ 30, 225, 0 ],
-      "translation": [ 0, 3, 0],
-      "scale":[ 1, 1, 1 ]
-    },
-    "ground": {
-      "rotation": [ 0, 0, 0 ],
-      "translation": [ 0, 3, 0],
-      "scale":[ 0.5, 0.5, 0.5 ]
-    },
-    "fixed": {
-      "rotation": [ 0, 180, 0 ],
-      "translation": [ 0, 4, 0],
-      "scale":[ 1, 1, 1 ]
-    },
-    "thirdperson_righthand": {
-      "rotation": [ 45, 45, 0 ],
-      "translation": [ 0, 3, 0 ],
-      "scale": [ 0.5, 0.5, 0.5 ]
-    }
-  },
-  "texture_size": [16, 16],
-  "textures": {
-    "all": "aetherpunk:block/ancient_core",
-    "particle": "aetherpunk:block/ancient_core"
-  },
-  "elements": [
-    {
-      "name": "heavy_core",
-      "from": [4, 0, 4],
-      "to": [12, 8, 12],
-      "faces": {
-        "north": {"uv": [0, 8, 8, 16], "texture": "all"},
-        "east": {"uv": [0, 8, 8, 16], "texture": "all"},
-        "south": {"uv": [0, 8, 8, 16], "texture": "all"},
-        "west": {"uv": [0, 8, 8, 16], "texture": "all"},
-        "up": {"uv": [0, 0, 8, 8], "texture": "all"},
-        "down": {"uv": [8, 0, 16, 8], "texture": "all"}
-      }
-    }
-  ]
+	"format_version": "1.21.6",
+	"credit": "rosie <3",
+	"texture_size": [32, 24],
+	"textures": {
+		"particle": "aetherpunk:block/ancient_core",
+		"all": "aetherpunk:block/ancient_core"
+	},
+	"elements": [
+		{
+			"name": "heavy_core",
+			"from": [4, 0, 4],
+			"to": [12, 8, 12],
+			"shade": false,
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 4, 8]},
+			"faces": {
+				"north": {"uv": [0, 5.33333, 4, 10.66667], "texture": "#all"},
+				"east": {"uv": [12, 5.33333, 16, 10.66667], "texture": "#all"},
+				"south": {"uv": [8, 5.33333, 12, 10.66667], "texture": "#all"},
+				"west": {"uv": [4, 5.33333, 8, 10.66667], "texture": "#all"},
+				"up": {"uv": [4, 0, 8, 5.33333], "rotation": 90, "texture": "#all"},
+				"down": {"uv": [4, 10.66667, 8, 16], "rotation": 270, "texture": "#all"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [45, 45, 0],
+			"translation": [0, 3, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"ground": {
+			"translation": [0, 3, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"gui": {
+			"rotation": [30, -135, 0],
+			"translation": [0, 3, 0]
+		},
+		"fixed": {
+			"rotation": [0, -180, 0],
+			"translation": [0, 4, 0]
+		}
+	}
 }

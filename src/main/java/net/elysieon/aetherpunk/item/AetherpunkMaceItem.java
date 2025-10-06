@@ -4,11 +4,11 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.elysieon.aetherpunk.components.MaceComponent;
 import net.elysieon.aetherpunk.entity.VolatileEntity;
-import net.elysieon.aetherpunk.index.AetherpunkDamageTypes;
-import net.elysieon.aetherpunk.index.AetherpunkEnchantments;
-import net.elysieon.aetherpunk.index.AetherpunkSounds;
+import net.elysieon.aetherpunk.index.*;
 import net.elysieon.aetherpunk.util.AetherpunkUtil;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttribute;
@@ -17,6 +17,9 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
@@ -24,7 +27,15 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
+import team.lodestar.lodestone.systems.easing.Easing;
+import team.lodestar.lodestone.systems.particle.builder.WorldParticleBuilder;
+import team.lodestar.lodestone.systems.particle.data.GenericParticleData;
+import team.lodestar.lodestone.systems.particle.data.color.ColorParticleData;
+import team.lodestar.lodestone.systems.particle.data.spin.SpinParticleData;
+
+import java.awt.*;
 
 public class AetherpunkMaceItem extends Item {
     private static final float ATTACK_DAMAGE = 6F;
@@ -97,6 +108,35 @@ public class AetherpunkMaceItem extends Item {
 
         if (!target.getWorld().isClient)
             player.getWorld().playSound(null, player.getBlockPos(), AetherpunkSounds.MACE_IMPACT_3, SoundCategory.PLAYERS, 1.5f, 0.9f);
+
+        // Hit Particles
+        if (!player.getWorld().isClient) {
+            ServerWorld serverWorld = (ServerWorld) player.getWorld();
+            serverWorld.spawnParticles(
+                    AetherpunkParticles.SHOCKWAVE,
+                    target.getX(), target.getY() + 1, target.getZ(),
+                    1,
+                    0, 0, 0,
+                    0.25
+            );
+        }
+
+        for (int i = 0; i < 75; i++) {
+            for (PlayerEntity loopedplayer : player.getWorld().getPlayers()) {
+                if (loopedplayer instanceof ServerPlayerEntity serverPlayer) {
+                    ServerPlayNetworking.send(serverPlayer, AetherpunkPacket.SPARK, new PacketByteBuf(PacketByteBufs
+                            .create()
+                            .writeDouble((target.getX()))
+                            .writeDouble((target.getY() + 1))
+                            .writeDouble((target.getZ()))
+                            .writeDouble(2)
+                            .writeFloat((0.9F))
+                            .writeFloat((0.64F))
+                            .writeFloat((0.1F))
+                    ));
+                }
+            }
+        }
     }
 
     public void volatileHit(LivingEntity target, PlayerEntity player, float damage) {
@@ -133,6 +173,35 @@ public class AetherpunkMaceItem extends Item {
         if (!player.getWorld().isClient) {
             player.getWorld().playSound(null, player.getBlockPos(), AetherpunkSounds.MACE_IMPACT_1, SoundCategory.PLAYERS, 1f, AetherpunkUtil.random(1.1f, 1.15f));
             player.getWorld().playSound(null, player.getBlockPos(), AetherpunkSounds.MACE_IMPACT_2, SoundCategory.PLAYERS, 2f, AetherpunkUtil.random(1.1f, 1.15f));
+        }
+
+        // Hit Particles
+        if (!player.getWorld().isClient) {
+            ServerWorld serverWorld = (ServerWorld) player.getWorld();
+            serverWorld.spawnParticles(
+                    AetherpunkParticles.SHOCKWAVER,
+                    target.getX(), target.getY() + 1, target.getZ(),
+                    1,
+                    0, 0, 0,
+                    0.25
+            );
+        }
+
+        for (int i = 0; i < 50; i++) {
+            for (PlayerEntity loopedplayer : player.getWorld().getPlayers()) {
+                if (loopedplayer instanceof ServerPlayerEntity serverPlayer) {
+                    ServerPlayNetworking.send(serverPlayer, AetherpunkPacket.SPARK, new PacketByteBuf(PacketByteBufs
+                            .create()
+                            .writeDouble((target.getX()))
+                            .writeDouble((target.getY() + 1))
+                            .writeDouble((target.getZ()))
+                            .writeDouble(4)
+                            .writeFloat((0.9F))
+                            .writeFloat((0.15F))
+                            .writeFloat((0.2F))
+                    ));
+                }
+            }
         }
     }
 

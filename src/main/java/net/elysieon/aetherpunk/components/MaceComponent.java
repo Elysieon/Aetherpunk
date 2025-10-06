@@ -5,14 +5,19 @@ import dev.onyxstudios.cca.api.v3.component.tick.CommonTickingComponent;
 import net.elysieon.aetherpunk.Aetherpunk;
 import net.elysieon.aetherpunk.effect.FlashEffect;
 import net.elysieon.aetherpunk.effect.RedFlashEffect;
+import net.elysieon.aetherpunk.index.AetherpunkPacket;
 import net.elysieon.aetherpunk.index.AetherpunkSounds;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import org.jetbrains.annotations.NotNull;
 
@@ -174,7 +179,23 @@ public class MaceComponent implements AutoSyncedComponent, CommonTickingComponen
     public void handleTrailParticles() {
         if (this.player.isOnGround()) this.particleActive = false;
 
-        //
+        // Trail Particle
+        for (int i = 0; i < 2; i++) {
+            for (PlayerEntity loopedplayer : player.getWorld().getPlayers()) {
+                if (loopedplayer instanceof ServerPlayerEntity serverPlayer) {
+                    ServerPlayNetworking.send(serverPlayer, AetherpunkPacket.SPARK, new PacketByteBuf(PacketByteBufs
+                            .create()
+                            .writeDouble((this.player.getX()))
+                            .writeDouble((this.player.getY() + 1))
+                            .writeDouble((this.player.getZ()))
+                            .writeDouble(15)
+                            .writeFloat((0.15F))
+                            .writeFloat((0.9F))
+                            .writeFloat((0.15F))
+                    ));
+                }
+            }
+        }
     }
 
     @Override
