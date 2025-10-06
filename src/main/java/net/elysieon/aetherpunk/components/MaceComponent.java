@@ -14,17 +14,11 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.util.math.Vec3i;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 
 public class MaceComponent implements AutoSyncedComponent, CommonTickingComponent {
-    public static final Vec3i AETHER_COLOR = new Vec3i(195, 241, 231);
-    public static final Vec3i RELOCITY_COLOR = new Vec3i(142, 211, 133);
-    public static final Vec3i OVERLOAD_COLOR = new Vec3i(247, 192, 39);
-    public static final Vec3i VOLATILE_COLOR = new Vec3i(165, 41, 53);
-
     private final PlayerEntity player;
 
     private boolean particleActive = false;
@@ -108,10 +102,6 @@ public class MaceComponent implements AutoSyncedComponent, CommonTickingComponen
                 );
             }
         }
-
-//        if (this.frozen == 1 && !this.player.getWorld().isClient && this.frozenstate == 2)  {
-//            this.player.getWorld().playSound(null, player.getBlockPos(), AetherpunkSounds.VOLATILE, SoundCategory.PLAYERS, 2f, AetherpunkUtil.random(0.9f, 0.95f));
-//        }
 
         if (this.frozen > 0) {
             this.frozen -= 1;

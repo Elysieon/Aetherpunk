@@ -183,7 +183,6 @@ public class AetherpunkMaceItem extends Item {
             attacker.getWorld().playSound(null, attacker.getBlockPos(), AetherpunkSounds.MACE_IMPACT_1, SoundCategory.PLAYERS, 1f, AetherpunkUtil.random(1.1f, 1.15f));
             attacker.getWorld().playSound(null, attacker.getBlockPos(), AetherpunkSounds.MACE_IMPACT_2, SoundCategory.PLAYERS, 2f, AetherpunkUtil.random(1.1f, 1.15f));
         }
-
         return super.postHit(stack, target, attacker);
     }
 }
