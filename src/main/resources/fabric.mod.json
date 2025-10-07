@@ -3,9 +3,9 @@
 	"id": "aetherpunk",
 	"version": "${version}",
 	"name": "aetherpunk",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "Aetherpunk adds a new weapon and material to the game which is the comination of a ancient artifact and liquified diamond.",
 	"authors": [
-		"Me!"
+		"Elysieon"
 	],
 	"contact": {
 		"homepage": "https://fabricmc.net/",
