@@ -2,17 +2,18 @@
 	"schemaVersion": 1,
 	"id": "aetherpunk",
 	"version": "${version}",
-	"name": "aetherpunk",
-	"description": "Aetherpunk adds a new weapon and material to the game which is the comination of a ancient artifact and liquified diamond.",
+	"name": "Aetherpunk",
+	"description": "Aetherpunk adds a new weapon: the Aetherpunk Mace. This weapon is made from a combination of an ancient artifact: the Ancient Core, and the new-Diamond Bottle, which is made from liquifying diamonds into potions.",
 	"authors": [
-		"Elysieon"
+		"Elysieon",
+		"KognitionMC"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://modrinth.com/user/Elysieon",
+		"sources": "https://github.com/Elysieon/Aetherpunk"
 	},
 	"license": "CC0-1.0",
-	"icon": "assets/aetherpunk/icon.png",
+	"icon": "assets/aetherpunk/textures/item/diamond_bottle.png",
 	"environment": "*",
 	"entrypoints": {
       "main": [

@@ -23,7 +23,7 @@ public interface AetherpunkItems {
     ItemGroup AETHERPUNK_GROUP = FabricItemGroup.builder().displayName(Text.translatable("itemGroup.aetherpunk.aetherpunk_group")).icon(Aetherpunk::getRecipeKindIcon).build();
     Map<Item, Identifier> ITEMS = new LinkedHashMap();
     Item MACE = createItem("aetherpunk_mace", new AetherpunkMaceItem((new FabricItemSettings()).rarity(Rarity.EPIC).maxCount(1).fireproof()), AetherpunkEnchantments.RELOCITY, AetherpunkEnchantments.OVERLOAD, AetherpunkEnchantments.VOLATILE);
-    Item ANCIENT_CORE = createItem("ancient_core", new AncientCore((AetherpunkBlocks.ANCIENT_CORE), new FabricItemSettings().maxCount(1).fireproof()));
+    Item ANCIENT_CORE = createItem("ancient_core", new AncientCore((AetherpunkBlocks.ANCIENT_CORE), new FabricItemSettings().rarity(Rarity.EPIC).maxCount(1).fireproof()));
     Item DIAMOND_BOTTLE = createItem("diamond_bottle", new PotionItem(new Item.Settings()));
 
     static void init() {
