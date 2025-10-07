@@ -17,6 +17,7 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ToolItem;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -37,15 +38,14 @@ import team.lodestar.lodestone.systems.particle.data.spin.SpinParticleData;
 
 import java.awt.*;
 
-public class AetherpunkMaceItem extends Item {
+public class AetherpunkMaceItem extends ToolItem {
     private static final float ATTACK_DAMAGE = 6F;
     private static final float ATTACK_SPEED = 1.2F;
 
     private final Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
 
     public AetherpunkMaceItem(FabricItemSettings settings) {
-        super(settings);
-
+        super(AetherpunkToolMaterial.INSTANCE, settings);
         this.attributeModifiers = ImmutableMultimap.<EntityAttribute, EntityAttributeModifier>builder()
                 .put(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(
                         ATTACK_DAMAGE_MODIFIER_ID, "Weapon modifier",
@@ -227,7 +227,7 @@ public class AetherpunkMaceItem extends Item {
             volatileHit(target, (PlayerEntity) attacker, damage);
 
             if (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.VOLATILE)) {
-                attacker.getWorld().playSound(null, attacker.getBlockPos(), AetherpunkSounds.VOLATILE, SoundCategory.PLAYERS, 0.5f, AetherpunkUtil.random(1.1f, 1.15f));
+                attacker.getWorld().playSound(null, attacker.getBlockPos(), AetherpunkSounds.VOLATILE, SoundCategory.PLAYERS, 0.25f, AetherpunkUtil.random(1.1f, 1.15f));
             }
 
             return super.postHit(stack, target, attacker);
@@ -235,7 +235,7 @@ public class AetherpunkMaceItem extends Item {
 
 
         // Refills Charge depending on style
-        if (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.OVERLOAD)) mace.setChargeOverload(350);
+        if (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.OVERLOAD)) mace.setChargeOverload((int) Math.min((mace.getChargeOverload() * 350) + 175, 350));
         if (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.VOLATILE)) mace.setChargeVolatile(350);
         mace.setCharge(400);
 
@@ -252,6 +252,41 @@ public class AetherpunkMaceItem extends Item {
             attacker.getWorld().playSound(null, attacker.getBlockPos(), AetherpunkSounds.MACE_IMPACT_1, SoundCategory.PLAYERS, 1f, AetherpunkUtil.random(1.1f, 1.15f));
             attacker.getWorld().playSound(null, attacker.getBlockPos(), AetherpunkSounds.MACE_IMPACT_2, SoundCategory.PLAYERS, 2f, AetherpunkUtil.random(1.1f, 1.15f));
         }
+
+        // Handle Particles
+        if (!attacker.getWorld().isClient) {
+            ServerWorld serverWorld = (ServerWorld) attacker.getWorld();
+            if (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.RELOCITY)) serverWorld.spawnParticles(AetherpunkParticles.SHOCKWAVEG, target.getX(), target.getY() + 1, target.getZ(), 1, 0, 0, 0, 0.25);
+            else if (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.OVERLOAD)) serverWorld.spawnParticles(AetherpunkParticles.SHOCKWAVE, target.getX(), target.getY() + 1, target.getZ(), 1, 0, 0, 0, 0.25);
+            else if (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.VOLATILE)) serverWorld.spawnParticles(AetherpunkParticles.SHOCKWAVER, target.getX(), target.getY() + 1, target.getZ(), 1, 0, 0, 0, 0.25);
+            else serverWorld.spawnParticles(AetherpunkParticles.SHOCKWAVEB, target.getX(), target.getY() + 1, target.getZ(), 1, 0, 0, 0, 0.25);
+
+        }
+
+        // Spark Color [ 1 = 255 ]
+        var r = 0F; var g = 0.9F; var b = 0.9F;
+        if (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.RELOCITY)) {r = 0.2F; g = 0.9F; b = 0.2F;}
+        if (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.OVERLOAD)) {r = 0.9F; g = 0.64F; b = 0.1F;}
+        if (AetherpunkUtil.hasEnchantment(stack, AetherpunkEnchantments.VOLATILE)) {r = 0.9F; g = 0.15F; b = 0.2F;}
+
+        // Spark Particle ✨✨🌟 so skibidi
+        for (int i = 0; i < 25; i++) {
+            for (PlayerEntity loopedplayer : attacker.getWorld().getPlayers()) {
+                if (loopedplayer instanceof ServerPlayerEntity serverPlayer) {
+                    ServerPlayNetworking.send(serverPlayer, AetherpunkPacket.SPARK, new PacketByteBuf(PacketByteBufs
+                            .create()
+                            .writeDouble((target.getX()))
+                            .writeDouble((target.getY() + 1))
+                            .writeDouble((target.getZ()))
+                            .writeDouble(8)
+                            .writeFloat((r))
+                            .writeFloat((g))
+                            .writeFloat((b))
+                    ));
+                }
+            }
+        }
+
         return super.postHit(stack, target, attacker);
     }
 }

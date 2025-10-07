@@ -67,6 +67,6 @@ public class Aetherpunk implements ModInitializer, EntityComponentInitializer {
     }
 
     public static final ParticleType<BlockStateParticleEffect> DUST_PILLAR = ParticleTypes.register(
-            "dust_pillar", false, BlockStateParticleEffect.PARAMETERS_FACTORY, BlockStateParticleEffect::createCodec
+            "dust_pillaraetherpunk", false, BlockStateParticleEffect.PARAMETERS_FACTORY, BlockStateParticleEffect::createCodec
     );
 }

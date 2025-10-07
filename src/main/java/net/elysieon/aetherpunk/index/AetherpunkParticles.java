@@ -19,6 +19,8 @@ public interface AetherpunkParticles {
     LodestoneWorldParticleType SPARK = register("spark", new LodestoneWorldParticleType());
     DefaultParticleType SHOCKWAVE = (DefaultParticleType)create("shockwave", FabricParticleTypes.simple(true));
     DefaultParticleType SHOCKWAVER = (DefaultParticleType)create("shockwaver", FabricParticleTypes.simple(true));
+    DefaultParticleType SHOCKWAVEG = (DefaultParticleType)create("shockwaveg", FabricParticleTypes.simple(true));
+    DefaultParticleType SHOCKWAVEB = (DefaultParticleType)create("shockwaveb", FabricParticleTypes.simple(true));
 
     static void init() {
         PARTICLES.keySet().forEach((particle) -> Registry.register(Registries.PARTICLE_TYPE, (Identifier)PARTICLES.get(particle), particle));
@@ -38,5 +40,8 @@ public interface AetherpunkParticles {
         ParticleFactoryRegistry.getInstance().register(SPARK, LodestoneWorldParticleType.Factory::new);
         ParticleFactoryRegistry.getInstance().register(SHOCKWAVE, ShockwaveParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(SHOCKWAVER, ShockwaveParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(SHOCKWAVEG, ShockwaveParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(SHOCKWAVEB, ShockwaveParticle.Factory::new);
+
     }
 }
