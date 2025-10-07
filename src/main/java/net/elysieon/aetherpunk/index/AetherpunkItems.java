@@ -2,6 +2,7 @@ package net.elysieon.aetherpunk.index;
 
 import net.elysieon.aetherpunk.Aetherpunk;
 import net.elysieon.aetherpunk.item.AetherpunkMaceItem;
+import net.elysieon.aetherpunk.item.AncientCore;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
@@ -22,7 +23,7 @@ public interface AetherpunkItems {
     ItemGroup AETHERPUNK_GROUP = FabricItemGroup.builder().displayName(Text.translatable("itemGroup.aetherpunk.aetherpunk_group")).icon(Aetherpunk::getRecipeKindIcon).build();
     Map<Item, Identifier> ITEMS = new LinkedHashMap();
     Item MACE = createItem("aetherpunk_mace", new AetherpunkMaceItem((new FabricItemSettings()).rarity(Rarity.EPIC).maxCount(1).fireproof()), AetherpunkEnchantments.RELOCITY, AetherpunkEnchantments.OVERLOAD, AetherpunkEnchantments.VOLATILE);
-    Item ANCIENT_CORE = createItem("ancient_core", new BlockItem((AetherpunkBlocks.ANCIENT_CORE), new Item.Settings().maxCount(1).fireproof()));
+    Item ANCIENT_CORE = createItem("ancient_core", new AncientCore((AetherpunkBlocks.ANCIENT_CORE), new FabricItemSettings().maxCount(1).fireproof()));
     Item DIAMOND_BOTTLE = createItem("diamond_bottle", new PotionItem(new Item.Settings()));
 
     static void init() {

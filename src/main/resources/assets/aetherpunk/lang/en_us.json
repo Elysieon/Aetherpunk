@@ -4,8 +4,9 @@
   "item.aetherpunk.aetherpunk_mace": "Aetherpunk Mace",
   "item.aetherpunk.diamond_bottle.effect.water": "Diamond Bottle",
   "item.aetherpunk.diamond_bottle": "Diamond Bottle",
-  "block.aetherpunk.ancient_core": "Ancient Core",
 
+  "block.aetherpunk.ancient_core": "Ancient Core",
+  "item.ancient_core.desc": "An ancient relic, used as the vessel to a once-so powerful weapon.",
 
   "enchantment.aetherpunk.relocity": "Relocity",
   "enchantment.aetherpunk.relocity.desc": "Reuse some of the velocity from your last strike to boost yourself forward.",
@@ -14,7 +15,7 @@
   "enchantment.aetherpunk.overload.desc": "Channel your stored velocity into a overloading impact.",
 
   "enchantment.aetherpunk.volatile": "Volatile",
-  "enchantment.aetherpunk.volatile.desc": "Create a explosion on impact making a wave of destruction.",
+  "enchantment.aetherpunk.volatile.desc": "Create an explosion on impact making a wave of destruction.",
 
   "death.attack.aetherpunk.smash": "%1$s was smashed by %2$s",
   "death.attack.aetherpunk.smash.item": "%1$s was smashed by %2$s wielding %3$s",
